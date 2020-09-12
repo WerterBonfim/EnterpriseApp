@@ -1,0 +1,4 @@
+Curso ASP.NET Core Enterprise:
+    [] configurar o banco no docker -> no curso é utilizado o localdb. macete para descobrir o server: host.docker.internal\\SQLEXPRESS,1344;
+    [] configurar bons nomes nas APIs, iniciar o projeto com o DNS correto esse nome é obtido através do container_name
+    
