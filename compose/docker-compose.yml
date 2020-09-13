@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  
+  banco-sqlserver:
+    container_name: nse.banco.sqlserver
+    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=!123Nerdstore
+      - MSSQL_PID=Express
+    ports:
+      - 1433:1433
