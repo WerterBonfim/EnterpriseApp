@@ -35,6 +35,7 @@ src/
                 Microsoft.EntityFrameworkCore.Relational
                 Microsoft.EntityFrameworkCore.SqlServer
                 Microsoft.EntityFrameworkCore.Tools
+                Swashbuckle.AspNetCore
             ]
         Catalogo/NSE.Catalogo.API
         Cliente/NSE.Cliente.API        

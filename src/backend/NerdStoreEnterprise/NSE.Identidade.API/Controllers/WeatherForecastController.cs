@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace NSE.Identidade.API.Controllers
@@ -17,10 +18,26 @@ namespace NSE.Identidade.API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(
+            ILogger<WeatherForecastController> logger,
+            IConfiguration configuration
+            )
         {
             _logger = logger;
+            _configuration = configuration;
+        }
+
+        [HttpGet("informacoes")]
+        public IActionResult Informacoes()
+        {
+            var dados = new
+            {
+                Env = Environment.GetEnvironmentVariables(),
+                StringDeConexao = _configuration.GetConnectionString("DefaultConnection")
+            };
+            return Ok(dados);
         }
 
         [HttpGet]

@@ -11,3 +11,36 @@ services:
       - MSSQL_PID=Express
     ports:
       - 1433:1433
+    networks:
+     - werter_net
+    
+    
+
+  api-identidade:
+    container_name: nse.api.identidade
+    image: mcr.microsoft.com/dotnet/core/aspnet:3.1.8-alpine3.12
+    build:
+      context: ../src/backend/NerdStoreEnterprise/NSE.Identidade.API/
+      dockerfile: Dockerfile
+    depends_on:
+      - banco-sqlserver
+    ports:
+      - 80:80
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=banco-sqlserver,1433;Database=NerdStoreEnterprise;User Id=sa;Password=!123Nerdstore;MultipleActiveResultSets=true;
+    networks:
+     - werter_net
+    
+networks:
+  werter_net:
+    driver: bridge
+
+  # app-teste:
+  #   container_name: teste
+  #   image: clearlinux/node
+  #   build:
+  #         context: .
+  #         dockerfile: Dockefile-teste
+  #   depends_on:
+  #     - banco-sqlserver
+  #   entrypoint: ["/wait-for-it.sh", "banco-sqlserver:1433", "-t", "10", "10+1"]

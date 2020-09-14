@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NSE.Identidade.API.Models
 {
-    public class UsuarioLogin
+    public class UsuarioLoginViewModel
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
