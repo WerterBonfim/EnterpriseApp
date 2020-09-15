@@ -17,8 +17,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Configuration" />
-      <Folder Include="Extensions" />
+      <Compile Remove="Models\UserViewModels.cs" />
+      <Compile Remove="Models\UsuarioLoginViewModel.cs" />
+      <Compile Remove="Models\UsuarioRegistroViewModel.cs" />
     </ItemGroup>
 
 
