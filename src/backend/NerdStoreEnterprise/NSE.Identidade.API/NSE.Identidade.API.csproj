@@ -20,6 +20,11 @@
       <Compile Remove="Models\UserViewModels.cs" />
       <Compile Remove="Models\UsuarioLoginViewModel.cs" />
       <Compile Remove="Models\UsuarioRegistroViewModel.cs" />
+      <Compile Remove="Extensions\ExceptionMiddleware.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\NSE.WebApp.MVC\NSE.WebApp.MVC.csproj" />
     </ItemGroup>
 
 

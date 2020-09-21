@@ -14,9 +14,19 @@ namespace NSE.WebApp.MVC
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostEnvironment hostEnvironment)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(hostEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{hostEnvironment}.json", true, true)
+                .AddEnvironmentVariables();
+
+            // Na IDE Rider precisa usar um plugin
+            // if (hostEnvironment.IsDevelopment())
+            //     builder.AddUserSecrets<Startup>();
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -25,7 +35,8 @@ namespace NSE.WebApp.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityConfiguration();
-            services.AddMvcConfiguration();
+            services.AddMvcConfiguration(Configuration);
+            services.RegisterServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

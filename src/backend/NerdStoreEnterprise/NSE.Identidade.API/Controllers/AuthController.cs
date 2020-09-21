@@ -76,12 +76,11 @@ namespace NSE.Identidade.API.Controllers
                 var login = await GerarJwt(usuarioLogin.Email);
                 return RespostaPersonalizada(login);
             }
-            
+
             if (result.IsLockedOut)
                 AdicionarErro("Usuário temporariamente bloqueado por tentativas inválidas");
-            
-            if (result.IsNotAllowed)
-                AdicionarErro("Usuário ou senha incorretos");
+
+            AdicionarErro("Usuário ou senha incorretos");
 
             return RespostaPersonalizada();
         }
