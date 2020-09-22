@@ -4,4 +4,16 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Compile Remove="DomainObjects\Data\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="DomainObjects\Data\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="DomainObjects\Data\**" />
+    </ItemGroup>
+
 </Project>

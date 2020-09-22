@@ -24,7 +24,7 @@ src/
                 Microsoft.AspNetCore.Authentication. JwtBearer 3.1.8
                 Microsoft.AspNetCore.Identity.EntityFrameworkCore 3.1.3
                 Microsoft.AspNetCore.Identity.UI 3.1.3
-                Microsoft.EntityFrameworkCore 3.1.3
+                Microsoft.EntityFrameworkCore 3.1.8
                 Microsoft.EntityFrameworkCore.Abstractions
                 Microsoft.EntityFrameworkCore.Relational
                 Microsoft.EntityFrameworkCore.SqlServer

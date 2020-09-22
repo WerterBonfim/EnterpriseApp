@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using NSE.Catalogo.API.Models;
+using NSE.Core.Data;
+
+namespace NSE.Catalogo.API.Data.Repository
+{
+    public class ProdutoRepository : IProdutoRepository
+    {
+        private readonly CatalogoContext _context;
+
+        public IUnitOfWork UnitOfWork => _context;
+
+        public ProdutoRepository(CatalogoContext catalogoContext)
+        {
+            _context = catalogoContext;
+        }
+
+
+        public async Task<IEnumerable<Produto>> Listar()
+        {
+            return await _context.Produtos
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<Produto> ObterPorId(Guid id)
+        {
+            return await _context.Produtos.FindAsync(id);
+        }
+
+        public void Adicionar(Produto produto)
+        {
+            _context.Produtos.Add(produto);
+        }
+
+        public void Atualizar(Produto produto)
+        {
+            _context.Produtos.Update(produto);
+        }
+        
+        public void Dispose()
+        {
+            _context?.Dispose();
+        }
+    }
+}

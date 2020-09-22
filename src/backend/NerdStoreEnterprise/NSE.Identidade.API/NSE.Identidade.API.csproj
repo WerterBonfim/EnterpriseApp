@@ -21,6 +21,8 @@
       <Compile Remove="Models\UsuarioLoginViewModel.cs" />
       <Compile Remove="Models\UsuarioRegistroViewModel.cs" />
       <Compile Remove="Extensions\ExceptionMiddleware.cs" />
+      <Compile Remove="Controllers\WeatherForecastController.cs" />
+      <Compile Remove="WeatherForecast.cs" />
     </ItemGroup>
 
     <ItemGroup>
