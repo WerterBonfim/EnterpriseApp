@@ -11,8 +11,7 @@ namespace NSE.Catalogo.API.Configuration
 {
     public class PrepararDb
     {
-        private static string _nomeApi = "Catálogo.API";
-        
+        private static string _nomeApp = "Identidade.API";
         public static void RodarMigrationInicial(IApplicationBuilder app)
         {
             using (var scopo = app.ApplicationServices.CreateScope())
@@ -23,16 +22,18 @@ namespace NSE.Catalogo.API.Configuration
 
         private static void RodarMigrations(CatalogoContext context)
         {
-            Console.WriteLine($"{_nomeApi}: Verificando se o banco já existe");
-            if (context.Database.GetService<IRelationalDatabaseCreator>().Exists())
-            {
-                Console.WriteLine("Banco já existe");
-                return;
-            }
+            Informar("Verificando se a migrations pendentes...");
+            var bancoNaoExiste = !context.Database.GetService<IRelationalDatabaseCreator>().Exists();
+            var temMigrationsPendendente = context.Database.GetPendingMigrations().Any();
+            var temAlgoPendente = bancoNaoExiste || temMigrationsPendendente;
 
-            Console.WriteLine($"{_nomeApi}: Iniciando o migrations");
-            if (context.Database.GetMigrations().Any())
-                context.Database.Migrate();
+            if (!temAlgoPendente) return;
+            
+            Informar("Rodando as migrations");
+            context.Database.Migrate();
         }
+        
+        private static void Informar(string texto) =>
+            Console.WriteLine($"{_nomeApp}: {texto}");
     }
 }

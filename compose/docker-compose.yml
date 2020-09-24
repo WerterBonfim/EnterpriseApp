@@ -1,7 +1,6 @@
 version: "3.7"
 
 services:
-  
   banco-sqlserver:
     container_name: nse.banco.sqlserver
     image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
@@ -12,25 +11,48 @@ services:
     ports:
       - 1433:1433
     networks:
-     - werter_net
-    
-    
+      - werter_net    
 
   api-identidade:
     container_name: nse.api.identidade
     image: mcr.microsoft.com/dotnet/core/aspnet:3.1.8-alpine3.12
     build:
-      context: ../src/backend/NerdStoreEnterprise/NSE.Identidade.API/
-      dockerfile: Dockerfile
-    depends_on:
-      - banco-sqlserver
+      context: ../src/backend/NerdStoreEnterprise/
+      dockerfile: NSE.Identidade.API/Dockerfile    
     ports:
-      - 80:80
+      - "5000:5000"
+      - "5001:5001"      
+    environment:      
+      - ConnectionStrings__DefaultConnection=Server=banco-sqlserver,1433;Database=NerdStoreEnterprise;User Id=sa;Password=!123Nerdstore;MultipleActiveResultSets=true;
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://*:5001
+      - AppSettings__Secret=UmaChaveMuitoSecreta
+      - AppSettings__ExpiracaoHoras=2
+      - AppSettings__Emissor=MeuSistema
+      - AppSettings__ValidoEm=http:localhost
+      - Host=api-identidade
+    networks:
+      - werter_net
+    depends_on:      
+      - banco-sqlserver        
+
+  api-catalogo:
+    container_name: nse.api.catalogo
+    build:
+      context: ../src/backend/NerdStoreEnterprise/
+      dockerfile: NSE.Catalogo.API/Dockerfile
+    depends_on:
+      - banco-sqlserver      
+    ports:
+      - "5300:5300"
+      - "5301:5301"
     environment:
       - ConnectionStrings__DefaultConnection=Server=banco-sqlserver,1433;Database=NerdStoreEnterprise;User Id=sa;Password=!123Nerdstore;MultipleActiveResultSets=true;
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://*:5301
     networks:
      - werter_net
-    
+
 networks:
   werter_net:
     driver: bridge

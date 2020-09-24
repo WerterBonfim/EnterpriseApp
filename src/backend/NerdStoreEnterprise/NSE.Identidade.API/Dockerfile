@@ -1,25 +1,27 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1.8-alpine3.12 as base
 WORKDIR /app
-EXPOSE 80
-
-
+EXPOSE 5000
+EXPOSE 5001
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1.402-alpine3.12 AS build
 WORKDIR /src
 
-ARG PROJETO="NSE.Identidade.API.csproj"
+#"NSE.Identidade.API.csproj"
 
 # Copia csproj e faz um restore de cada layer
-COPY NSE.Identidade.API.csproj .
-RUN dotnet restore $PROJETO
+COPY $PROJETO/$PROJETO.csproj $PROJETO/
+RUN dotnet restore $PROJETO/$PROJETO.csproj
 
 #Copia tudo 
-COPY . .
+COPY $PROJETO/ $PROJETO/
+
 
 WORKDIR /src
-RUN dotnet build $PROJETO -c Release -o /app/b
+
+RUN dotnet build $PROJETO/$PROJETO.csproj -c Release -o /app/b
 FROM build as publish
-RUN dotnet publish $PROJETO -c Release -o /app/publish
+
+RUN dotnet publish NSE.Identidade.API/NSE.Identidade.API.csproj -c Release -o /app/publish
 
 #final 
 FROM base as final
@@ -32,6 +34,5 @@ RUN apk add --no-cache icu-libs
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 COPY --from=publish /app/publish .
-#RUN ls
-ENTRYPOINT ["dotnet", "NSE.Identidade.API.dll"]
 
+ENTRYPOINT ["dotnet", "NSE.Identidade.API.dll"]
