@@ -18,7 +18,7 @@ services:
     image: mcr.microsoft.com/dotnet/core/aspnet:3.1.8-alpine3.12
     build:
       context: ../src/backend/NerdStoreEnterprise/
-      dockerfile: NSE.Identidade.API/Dockerfile    
+      dockerfile: NSE.Identidade.API/Dockerfile        
     ports:
       - "5000:5000"
       - "5001:5001"      
@@ -54,8 +54,12 @@ services:
      - werter_net
 
 networks:
-  werter_net:
-    driver: bridge
+  werter_net:    
+    driver: bridge    
+    name: werter
+    
+    
+    
 
   # app-teste:
   #   container_name: teste

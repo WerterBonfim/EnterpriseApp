@@ -61,6 +61,7 @@ namespace NSE.Identidade.API.Controllers
         [HttpPost("autenticar")]
         public async Task<IActionResult> Login(UsuarioLogin usuarioLogin)
         {
+            
             if (!ModelState.IsValid) return RespostaPersonalizada(ModelState);
 
             var result = await _signInManager.PasswordSignInAsync(
@@ -77,6 +78,8 @@ namespace NSE.Identidade.API.Controllers
                 return RespostaPersonalizada(login);
             }
 
+
+            
             if (result.IsLockedOut)
                 AdicionarErro("Usuário temporariamente bloqueado por tentativas inválidas");
 
@@ -91,6 +94,7 @@ namespace NSE.Identidade.API.Controllers
             var usuario = await _userManager.FindByEmailAsync(email);
             var claims = await _userManager.GetClaimsAsync(usuario);
             var roles = await _userManager.GetRolesAsync(usuario);
+            
 
             ConfigurarClaims(claims, usuario, roles);
             var compactToken = GerarCompactToken(claims);

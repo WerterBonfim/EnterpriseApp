@@ -9,16 +9,16 @@ WORKDIR /src
 #"NSE.Identidade.API.csproj"
 
 # Copia csproj e faz um restore de cada layer
-COPY $PROJETO/$PROJETO.csproj $PROJETO/
-RUN dotnet restore $PROJETO/$PROJETO.csproj
+COPY NSE.Identidade.API/NSE.Identidade.API.csproj NSE.Identidade.API/
+RUN dotnet restore NSE.Identidade.API/NSE.Identidade.API.csproj
 
 #Copia tudo 
-COPY $PROJETO/ $PROJETO/
+COPY NSE.Identidade.API/ NSE.Identidade.API/
 
 
 WORKDIR /src
 
-RUN dotnet build $PROJETO/$PROJETO.csproj -c Release -o /app/b
+RUN dotnet build NSE.Identidade.API/NSE.Identidade.API.csproj -c Release -o /app/b
 FROM build as publish
 
 RUN dotnet publish NSE.Identidade.API/NSE.Identidade.API.csproj -c Release -o /app/publish

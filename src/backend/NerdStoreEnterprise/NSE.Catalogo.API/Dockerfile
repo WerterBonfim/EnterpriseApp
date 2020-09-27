@@ -9,13 +9,13 @@ WORKDIR /src
 
 # Copia csproj e faz um restore de cada layer
 COPY ["NSE.Catalogo.API/NSE.Catalogo.API.csproj", "NSE.Catalogo.API/"]
-COPY ["NSE.Core/NSE.Core.csproj", "NSE.Core/"]
+COPY ["building blocks/NSE.Core/NSE.Core.csproj", "NSE.Core/"]
 
 RUN dotnet restore "NSE.Catalogo.API/NSE.Catalogo.API.csproj"
 
 #Copia tudo 
 COPY "NSE.Catalogo.API/" "NSE.Catalogo.API/"
-COPY "NSE.Core/" "NSE.Core/"
+COPY "building blocks/NSE.Core/" "NSE.Core/"
 
 WORKDIR /src
 
