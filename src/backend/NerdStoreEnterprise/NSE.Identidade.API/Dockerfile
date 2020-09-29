@@ -1,19 +1,23 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1.8-alpine3.12 as base
 WORKDIR /app
-EXPOSE 5000
-EXPOSE 5001
+EXPOSE 5100
+EXPOSE 5101
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1.402-alpine3.12 AS build
 WORKDIR /src
 
 #"NSE.Identidade.API.csproj"
+#"NSE.WebApi.Core.csproj"
 
 # Copia csproj e faz um restore de cada layer
-COPY NSE.Identidade.API/NSE.Identidade.API.csproj NSE.Identidade.API/
+COPY ["NSE.Identidade.API/NSE.Identidade.API.csproj",  "NSE.Identidade.API/"]
+COPY ["building blocks/NSE.WebApi.Core/NSE.WebApi.Core.csproj",  "building blocks/NSE.WebApi.Core/"]
+
 RUN dotnet restore NSE.Identidade.API/NSE.Identidade.API.csproj
 
 #Copia tudo 
-COPY NSE.Identidade.API/ NSE.Identidade.API/
+COPY ["NSE.Identidade.API/",  "NSE.Identidade.API/"]
+COPY ["building blocks/NSE.WebApi.Core/",  "building blocks/NSE.WebApi.Core/"]
 
 
 WORKDIR /src

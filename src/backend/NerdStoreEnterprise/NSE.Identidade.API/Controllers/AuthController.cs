@@ -11,10 +11,11 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NSE.Identidade.API.Extensions;
 using NSE.Identidade.API.Models;
+using NSE.WebApi.Core.Identidade;
 
 namespace NSE.Identidade.API.Controllers
 {
-    [Route("api/identidade")]
+    [Route("identidade")]
     public class AuthController : BaseController
     {
         private readonly SignInManager<IdentityUser> _signInManager;

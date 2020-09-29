@@ -14,8 +14,8 @@ COPY ["building blocks/NSE.Core/NSE.Core.csproj", "NSE.Core/"]
 RUN dotnet restore "NSE.Catalogo.API/NSE.Catalogo.API.csproj"
 
 #Copia tudo 
-COPY "NSE.Catalogo.API/" "NSE.Catalogo.API/"
-COPY "building blocks/NSE.Core/" "NSE.Core/"
+COPY ["NSE.Catalogo.API/", "NSE.Catalogo.API/"]
+COPY ["building blocks/NSE.Core/", "building blocks/NSE.Core/"]
 
 WORKDIR /src
 

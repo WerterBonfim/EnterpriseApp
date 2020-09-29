@@ -15,6 +15,14 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Extensions\AppSettings.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\building blocks\NSE.WebApi.Core\NSE.WebApi.Core.csproj" />
     </ItemGroup>    
     
     

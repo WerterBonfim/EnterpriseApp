@@ -64,6 +64,7 @@
       <Compile Remove="Services\I.cs" />
       <Compile Remove="Views\Shared\Components\Summary\Default.cshtml\**" />
       <Compile Remove="Views\Shared\_LoginPartial.cshtml.cs" />
+      <Compile Remove="Views\Catalogo\Index.cshtml.cs" />
     </ItemGroup>
 
     <ItemGroup>

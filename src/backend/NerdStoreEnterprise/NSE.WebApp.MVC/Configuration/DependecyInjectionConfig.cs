@@ -12,6 +12,7 @@ namespace NSE.WebApp.MVC.Configuration
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUser, AspNetUser>();
+            services.AddHttpClient<ICatalogoService, CatalogoService>();
             
             services.AddHttpClient<IAutenticacaoService, AutenticacaoService>()
                 .ConfigureHttpMessageHandlerBuilder(x =>

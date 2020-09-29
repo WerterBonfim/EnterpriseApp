@@ -9,9 +9,9 @@ services:
       - SA_PASSWORD=!123Nerdstore
       - MSSQL_PID=Express
     ports:
-      - 1433:1433
+      - 1433:1433    
     networks:
-      - werter_net    
+      - werter_net        
 
   api-identidade:
     container_name: nse.api.identidade
@@ -20,12 +20,12 @@ services:
       context: ../src/backend/NerdStoreEnterprise/
       dockerfile: NSE.Identidade.API/Dockerfile        
     ports:
-      - "5000:5000"
-      - "5001:5001"      
+      - "5100:5100"
+      - "5101:5101"      
     environment:      
       - ConnectionStrings__DefaultConnection=Server=banco-sqlserver,1433;Database=NerdStoreEnterprise;User Id=sa;Password=!123Nerdstore;MultipleActiveResultSets=true;
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://*:5001
+      - ASPNETCORE_URLS=http://*:5101
       - AppSettings__Secret=UmaChaveMuitoSecreta
       - AppSettings__ExpiracaoHoras=2
       - AppSettings__Emissor=MeuSistema
