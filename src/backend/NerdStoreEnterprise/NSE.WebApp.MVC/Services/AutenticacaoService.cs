@@ -23,7 +23,7 @@ namespace NSE.WebApp.MVC.Services
         public async Task<UsuarioRespostaLogin> Login(UsuarioLogin usuarioLogin)
         {
             var loginContent = SerializarConteudo(usuarioLogin);
-            var endpoint = "/api/identidade/autenticar";
+            var endpoint = "/identidade/autenticar";
             var resposta = await _httpClient.PostAsync(endpoint, loginContent);
             return await TratarRequest(resposta);
         }
@@ -32,7 +32,7 @@ namespace NSE.WebApp.MVC.Services
         {
             var loginContent = SerializarConteudo(usuarioRegistro);
 
-            var endpoint = "/api/identidade/nova-conta";
+            var endpoint = "/identidade/nova-conta";
             var resposta = await _httpClient.PostAsync(endpoint, loginContent);
             var response = await TratarRequest(resposta);
             return response;
