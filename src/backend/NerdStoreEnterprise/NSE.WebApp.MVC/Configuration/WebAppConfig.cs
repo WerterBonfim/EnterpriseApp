@@ -1,5 +1,7 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,6 +44,15 @@ namespace NSE.WebApp.MVC.Configuration
             app.UseRouting();
             
             app.UseIdentityConfiguration();
+
+            var culturasSuportadas = new[] {new CultureInfo("pt-BR")};
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("pt-BR"),
+                SupportedCultures = culturasSuportadas,
+                SupportedUICultures = culturasSuportadas
+            });
+            
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
