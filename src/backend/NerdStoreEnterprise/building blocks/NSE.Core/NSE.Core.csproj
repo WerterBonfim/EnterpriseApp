@@ -16,4 +16,9 @@
       <None Remove="DomainObjects\Data\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="9.2.2" />
+      <PackageReference Include="MediatR" Version="8.1.0" />
+    </ItemGroup>
+
 </Project>
