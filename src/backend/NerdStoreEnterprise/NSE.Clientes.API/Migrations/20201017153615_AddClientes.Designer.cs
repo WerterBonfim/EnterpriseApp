@@ -10,8 +10,8 @@ using NSE.Clientes.API.Data;
 namespace NSE.Clientes.API.Migrations
 {
     [DbContext(typeof(ClientesContext))]
-    [Migration("20201002013612_Clientes")]
-    partial class Clientes
+    [Migration("20201017153615_AddClientes")]
+    partial class AddClientes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,6 +25,9 @@ namespace NSE.Clientes.API.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EnderecoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Excluido")
@@ -109,7 +112,8 @@ namespace NSE.Clientes.API.Migrations
                             b1.Property<string>("Endereco")
                                 .IsRequired()
                                 .HasColumnName("Email")
-                                .HasColumnType("varchar(254)");
+                                .HasColumnType("varchar(254)")
+                                .HasMaxLength(254);
 
                             b1.HasKey("ClienteId");
 

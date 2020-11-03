@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace NSE.WebApp.MVC.Models

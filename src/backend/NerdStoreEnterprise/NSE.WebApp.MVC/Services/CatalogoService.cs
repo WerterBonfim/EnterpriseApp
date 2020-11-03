@@ -20,7 +20,7 @@ namespace NSE.WebApp.MVC.Services
             httpClient.BaseAddress = new Uri(settings.Value.CatalogoUrl);
             _httpClient = httpClient;
         }
-        
+
         public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
         {
             var response = await _httpClient.GetAsync("/catalogo/produtos");

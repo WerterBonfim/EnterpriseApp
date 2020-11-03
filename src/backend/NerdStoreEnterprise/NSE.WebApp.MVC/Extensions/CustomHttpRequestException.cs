@@ -5,8 +5,6 @@ namespace NSE.WebApp.MVC.Extensions
 {
     public class CustomHttpRequestException : Exception
     {
-        public HttpStatusCode StatusCode { get; private set; }
-
         public CustomHttpRequestException()
         {
         }
@@ -20,5 +18,7 @@ namespace NSE.WebApp.MVC.Extensions
         {
             StatusCode = statusCode;
         }
+
+        public HttpStatusCode StatusCode { get; }
     }
 }

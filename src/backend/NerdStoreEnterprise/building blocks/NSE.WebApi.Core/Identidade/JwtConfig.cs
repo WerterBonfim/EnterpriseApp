@@ -37,7 +37,7 @@ namespace NSE.WebApi.Core.Identidade
                 };
             });
         }
-        
+
         public static IApplicationBuilder UseAuthConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseAuthentication();

@@ -9,8 +9,6 @@ namespace NSE.Identidade.API
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-        
         public Startup(IHostEnvironment hostEnvironment)
         {
             var builder = new ConfigurationBuilder()
@@ -25,12 +23,15 @@ namespace NSE.Identidade.API
             Configuration = builder.Build();
         }
 
+        public IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApiConfiguration();
             services.AddIdentityConfiguration(Configuration);
             services.AddSwaggerConfiguration();
+            services.AddMessageBusConfiguration(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,5 +40,5 @@ namespace NSE.Identidade.API
             app.UseSwaggerConfiguration(env);
             app.UseApiConfiguration(env);
         }
-    } 
+    }
 }

@@ -5,17 +5,6 @@ namespace NSE.Clientes.API.Models
 {
     public class Endereco : Entity, IAggregateRoot
     {
-        public string Logradouro { get; private set; }
-        public string Numero { get; private set; }
-        public string Complemento { get; private set; }
-        public string Bairro { get; private set; }
-        public string Cep { get; private set; }
-        public string Estado { get; private set; }
-        public Guid ClienteId { get; private set; }
-
-        // EF Relacionamento
-        public Cliente Cliente { get; protected set; }
-
         protected Endereco()
         {
         }
@@ -31,5 +20,17 @@ namespace NSE.Clientes.API.Models
             Estado = estado;
             ClienteId = clienteId;
         }
+
+        public string Logradouro { get; }
+        public string Numero { get; }
+        public string Complemento { get; }
+        public string Bairro { get; }
+        public string Cep { get; }
+        public string Estado { get; }
+        
+
+        // EF Relacionamento
+        public Guid ClienteId { get; }
+        public Cliente Cliente { get; protected set; }
     }
 }

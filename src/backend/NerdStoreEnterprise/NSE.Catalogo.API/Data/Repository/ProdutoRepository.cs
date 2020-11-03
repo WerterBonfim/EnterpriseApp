@@ -5,19 +5,18 @@ using Microsoft.EntityFrameworkCore;
 using NSE.Catalogo.API.Models;
 using NSE.Core.Data;
 
-
 namespace NSE.Catalogo.API.Data.Repository
 {
     public class ProdutoRepository : IProdutoRepository
     {
         private readonly CatalogoContext _context;
 
-        public IUnitOfWork UnitOfWork => _context;
-
         public ProdutoRepository(CatalogoContext catalogoContext)
         {
             _context = catalogoContext;
         }
+
+        public IUnitOfWork UnitOfWork => _context;
 
 
         public async Task<IEnumerable<Produto>> Listar()
@@ -41,7 +40,7 @@ namespace NSE.Catalogo.API.Data.Repository
         {
             _context.Produtos.Update(produto);
         }
-        
+
         public void Dispose()
         {
             _context?.Dispose();

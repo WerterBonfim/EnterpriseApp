@@ -29,22 +29,16 @@ namespace NSE.Catalogo.API.Configuration
 
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("Total");
 
             app.UseAuthConfiguration(env);
-            
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-            
+
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
             PrepararDb.RodarMigrationInicial(app);
         }
     }

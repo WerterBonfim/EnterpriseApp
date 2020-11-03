@@ -31,7 +31,7 @@ namespace NSE.WebApi.Core.Identidade
         {
             _claim = claim;
         }
-        
+
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             if (!context.HttpContext.User.Identity.IsAuthenticated)
@@ -42,9 +42,7 @@ namespace NSE.WebApi.Core.Identidade
             }
 
             if (!CustomAuthorization.ValidarClaimsUsuario(context.HttpContext, _claim.Type, _claim.Value))
-            {
                 context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
-            }
         }
     }
 }

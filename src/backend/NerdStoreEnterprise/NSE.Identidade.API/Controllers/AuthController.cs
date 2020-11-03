@@ -5,12 +5,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using EasyNetQ;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using NSE.Identidade.API.Extensions;
+using NSE.Core.Messages.Integrations;
 using NSE.Identidade.API.Models;
+using NSE.WebApi.Core.Controllers;
 using NSE.WebApi.Core.Identidade;
 
 namespace NSE.Identidade.API.Controllers
@@ -18,9 +20,14 @@ namespace NSE.Identidade.API.Controllers
     [Route("identidade")]
     public class AuthController : BaseController
     {
+        private static readonly DateTimeOffset UnixEpoch =
+            new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+        private readonly AppSettings _appSettings;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly AppSettings _appSettings;
+
+        private IBus _bus;
 
         public AuthController(
             SignInManager<IdentityUser> signInManager,
@@ -29,6 +36,7 @@ namespace NSE.Identidade.API.Controllers
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            //_bus = bus;
             _appSettings = appSettings.Value;
         }
 
@@ -48,9 +56,12 @@ namespace NSE.Identidade.API.Controllers
             var result = await _userManager.CreateAsync(user, usuarioRegistro.Senha);
             if (result.Succeeded)
             {
+                // integração aqui.
+                var response = await RegistrarCliente(usuarioRegistro);
+
                 await _signInManager.SignInAsync(user, false);
                 var login = await GerarJwt(usuarioRegistro.Email);
-                return Ok(RespostaPersonalizada(login));
+                return RespostaPersonalizada(login);
             }
 
             foreach (var erro in result.Errors)
@@ -59,10 +70,29 @@ namespace NSE.Identidade.API.Controllers
             return RespostaPersonalizada();
         }
 
+        private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
+        {
+            var usuario = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
+
+            var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(
+                Guid.Parse(usuario.Id),
+                usuarioRegistro.Nome,
+                usuarioRegistro.Email,
+                usuarioRegistro.Cpf
+            );
+
+
+            _bus = RabbitHutch.CreateBus("host=localhost:5672");
+            var response =
+                await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+
+            return response;
+        }
+
+
         [HttpPost("autenticar")]
         public async Task<IActionResult> Login(UsuarioLogin usuarioLogin)
         {
-            
             if (!ModelState.IsValid) return RespostaPersonalizada(ModelState);
 
             var result = await _signInManager.PasswordSignInAsync(
@@ -80,7 +110,6 @@ namespace NSE.Identidade.API.Controllers
             }
 
 
-            
             if (result.IsLockedOut)
                 AdicionarErro("Usuário temporariamente bloqueado por tentativas inválidas");
 
@@ -95,7 +124,7 @@ namespace NSE.Identidade.API.Controllers
             var usuario = await _userManager.FindByEmailAsync(email);
             var claims = await _userManager.GetClaimsAsync(usuario);
             var roles = await _userManager.GetRolesAsync(usuario);
-            
+
 
             ConfigurarClaims(claims, usuario, roles);
             var compactToken = GerarCompactToken(claims);
@@ -165,10 +194,9 @@ namespace NSE.Identidade.API.Controllers
                 claims.Add(new Claim("role", role));
         }
 
-        private static DateTimeOffset UnixEpoch =
-            new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
-
         private static long ToUnixEpochDate(DateTime data)
-            => (long) Math.Round((data.ToUniversalTime() - UnixEpoch).TotalSeconds);
+        {
+            return (long) Math.Round((data.ToUniversalTime() - UnixEpoch).TotalSeconds);
+        }
     }
 }

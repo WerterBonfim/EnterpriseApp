@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NSE.Clientes.API.Models;
@@ -15,29 +16,35 @@ namespace NSE.Clientes.API.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(200)");
 
+
             builder.OwnsOne(x => x.Cpf, b =>
             {
-                b.Property(x => x.Numero)
+                b.Property<Guid>("ClienteId")
+                    .HasColumnType("uniqueidentifier");
+                
+                b.Property(c => c.Numero)
                     .IsRequired()
                     .HasMaxLength(CPF.QtdMaximaDeCaracteres)
                     .HasColumnName("Cpf")
                     .HasColumnType($"varchar({CPF.QtdMaximaDeCaracteres})");
             });
 
+
             builder.OwnsOne(x => x.Email, b =>
             {
-                b.Property(x  => x.Endereco)
+                b.Property(c => c.Endereco)
                     .IsRequired()
+                    .HasMaxLength(Email.EnderecoMaxLenght)
                     .HasColumnName("Email")
                     .HasColumnType($"varchar({Email.EnderecoMaxLenght})");
             });
-            
-            // 1 : 1 => Aluno : Endereco
+
+            // 1 : 1 => Cliente : Endereco
             builder.HasOne(c => c.Endereco)
-                .WithOne(c => c.Cliente);
+                .WithOne(i => i.Cliente)
+                .HasForeignKey<Endereco>(i => i.ClienteId);
 
             builder.ToTable("Clientes");
-
         }
     }
 }

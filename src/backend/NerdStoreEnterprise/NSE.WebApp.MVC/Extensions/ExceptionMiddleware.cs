@@ -31,7 +31,8 @@ namespace NSE.WebApp.MVC.Extensions
             }
         }
 
-        private static void HandlerRequestExceptionAsync(HttpContext context, CustomHttpRequestException httpRequestException)
+        private static void HandlerRequestExceptionAsync(HttpContext context,
+            CustomHttpRequestException httpRequestException)
         {
             if (httpRequestException.StatusCode == HttpStatusCode.Unauthorized)
             {
@@ -39,7 +40,7 @@ namespace NSE.WebApp.MVC.Extensions
                 return;
             }
 
-            context.Response.StatusCode = (int)httpRequestException.StatusCode;
+            context.Response.StatusCode = (int) httpRequestException.StatusCode;
         }
 
         private static void HandleCircuitBreakerExceptionAsync(HttpContext context)

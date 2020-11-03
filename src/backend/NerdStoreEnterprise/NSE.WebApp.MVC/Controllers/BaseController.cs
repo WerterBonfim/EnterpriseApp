@@ -14,7 +14,7 @@ namespace NSE.WebApp.MVC.Controllers
 
             foreach (var mensagem in resposta.Errors.Mensagens)
                 ModelState.AddModelError(string.Empty, mensagem);
-            
+
             return true;
         }
     }

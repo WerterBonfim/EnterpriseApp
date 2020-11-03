@@ -16,6 +16,7 @@ namespace NSE.WebApp.MVC.Services
     {
         [Get("/catalogo/produtos")]
         Task<IEnumerable<ProdutoViewModel>> ObterTodos();
+
         [Get("/catalogo/produtos/{id}")]
         Task<ProdutoViewModel> ObterProId(Guid id);
     }

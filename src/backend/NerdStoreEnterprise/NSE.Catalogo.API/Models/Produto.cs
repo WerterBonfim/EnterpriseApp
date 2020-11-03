@@ -1,7 +1,6 @@
 using System;
 using NSE.Core.DomainObjects;
 
-
 namespace NSE.Catalogo.API.Models
 {
     public class Produto : Entity, IAggregateRoot
@@ -13,10 +12,5 @@ namespace NSE.Catalogo.API.Models
         public DateTime DataCadastro { get; set; }
         public string Imagem { get; set; }
         public int QuantidadeEstoque { get; set; }
-
-        public Produto()
-        {
-            
-        }
     }
 }

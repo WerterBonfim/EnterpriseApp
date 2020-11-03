@@ -20,15 +20,15 @@ namespace NSE.Clientes.API.Data.Mappings
             builder.Property(x => x.Complemento)
                 .IsRequired()
                 .HasColumnType("varchar(250)");
-            
+
             builder.Property(x => x.Estado)
                 .IsRequired()
                 .HasColumnType("varchar(50)");
-            
+
             builder.Property(x => x.Logradouro)
                 .IsRequired()
                 .HasColumnType("varchar(200)");
-            
+
             builder.Property(x => x.Numero)
                 .IsRequired()
                 .HasColumnType("varchar(50)");

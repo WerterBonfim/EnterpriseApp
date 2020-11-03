@@ -16,8 +16,8 @@ namespace NSE.WebApp.MVC.Extensions
                 {
                     TimeSpan.FromSeconds(2),
                     TimeSpan.FromSeconds(3),
-                    TimeSpan.FromSeconds(4),
-                }, onRetry: (outcome, timeSpan, retryCount, context) =>
+                    TimeSpan.FromSeconds(4)
+                }, (outcome, timeSpan, retryCount, context) =>
                 {
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine($"Tentando pela {retryCount} vez!");

@@ -8,19 +8,19 @@ namespace NSE.WebApp.MVC.Controllers
     public class CatalogoController : BaseController
     {
         private readonly ICatalogoServiceRefit _catalogoService;
-        
+
         public CatalogoController(ICatalogoServiceRefit catalogoService)
         {
             _catalogoService = catalogoService;
         }
-        
+
         [HttpGet]
         [Route("")]
         [Route("vitrine")]
         public async Task<IActionResult> Index()
         {
             var produtos = await _catalogoService.ObterTodos();
-            
+
             return View(produtos);
         }
 

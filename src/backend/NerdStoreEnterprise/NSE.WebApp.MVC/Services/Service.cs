@@ -10,7 +10,6 @@ namespace NSE.WebApp.MVC.Services
     {
         protected StringContent SerializarConteudo(object obj)
         {
-            
             return new StringContent(
                 JsonSerializer.Serialize(obj),
                 Encoding.UTF8,

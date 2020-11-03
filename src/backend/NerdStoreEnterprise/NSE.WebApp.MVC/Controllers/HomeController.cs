@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using NSE.WebApp.MVC.Models;
 
 namespace NSE.WebApp.MVC.Controllers
@@ -24,7 +18,7 @@ namespace NSE.WebApp.MVC.Controllers
 
             return View("Error", modelError);
         }
-        
+
         public IActionResult Index()
         {
             return View();
@@ -48,19 +42,20 @@ namespace NSE.WebApp.MVC.Controllers
                     modelErro.Titulo = "Ocorreu um erro!";
                     modelErro.ErrorCode = id;
                     break;
-                
+
                 case 404:
-                    modelErro.Mensagem = "A página que está procurando não existe! Em caso de dúvidas entre em contato com nosso suporte";
+                    modelErro.Mensagem =
+                        "A página que está procurando não existe! Em caso de dúvidas entre em contato com nosso suporte";
                     modelErro.Titulo = "Ops! Página não encontrada.";
                     modelErro.ErrorCode = id;
                     break;
-                
+
                 case 403:
                     modelErro.Mensagem = "Você não tem permissão para fazer isto.";
                     modelErro.Titulo = "Acesso Negado";
                     modelErro.ErrorCode = id;
                     break;
-                
+
                 default:
                     return StatusCode(404);
             }

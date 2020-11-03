@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace NSE.Identidade.API.Controllers
+namespace NSE.WebApi.Core.Controllers
 {
     [ApiController]
     public abstract class BaseController : Controller
     {
-        private ICollection<string> _erros = new List<string>();
+        private readonly ICollection<string> _erros = new List<string>();
 
-        protected IActionResult RespostaPersonalizada(object resultado = null)
+        protected ActionResult RespostaPersonalizada(object resultado = null)
         {
             if (OperacaoValida())
                 return Ok(resultado);
@@ -19,8 +20,16 @@ namespace NSE.Identidade.API.Controllers
             {
                 {"Mensagens", _erros.ToArray()}
             };
-            
+
             return BadRequest(new ValidationProblemDetails(erros));
+        }
+
+        protected IActionResult RespostaPersonalizada(ValidationResult validationResult)
+        {
+            foreach (var error in validationResult.Errors)
+                AdicionarErro(error.ErrorMessage);
+
+            return RespostaPersonalizada();
         }
 
         protected IActionResult RespostaPersonalizada(ModelStateDictionary modelState)
@@ -28,7 +37,7 @@ namespace NSE.Identidade.API.Controllers
             var erros = modelState.Values.SelectMany(x => x.Errors);
             foreach (var erro in erros)
                 AdicionarErro(erro.ErrorMessage);
-            
+
             return RespostaPersonalizada();
         }
 
@@ -37,7 +46,14 @@ namespace NSE.Identidade.API.Controllers
             return !_erros.Any();
         }
 
-        protected void AdicionarErro(string erro) => _erros.Add(erro);
-        protected void LimparErros() => _erros.Clear();
+        protected void AdicionarErro(string erro)
+        {
+            _erros.Add(erro);
+        }
+
+        protected void LimparErros()
+        {
+            _erros.Clear();
+        }
     }
 }

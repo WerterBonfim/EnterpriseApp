@@ -19,14 +19,14 @@ namespace NSE.WebApp.MVC.Extensions
 
     public class AspNetUser : IUser
     {
-        public string Nome => _accessor.HttpContext.User.Identity.Name;
-
         private readonly IHttpContextAccessor _accessor;
 
         public AspNetUser(IHttpContextAccessor httpContextAccessor)
         {
             _accessor = httpContextAccessor;
         }
+
+        public string Nome => _accessor.HttpContext.User.Identity.Name;
 
         public Guid ObterId()
         {
@@ -66,15 +66,21 @@ namespace NSE.WebApp.MVC.Extensions
 
     public static class ClaimsPrincipalExtensions
     {
-        public static string GetUserId(this ClaimsPrincipal principal) =>
-            GetClaimByName(principal, "sub");
+        public static string GetUserId(this ClaimsPrincipal principal)
+        {
+            return GetClaimByName(principal, "sub");
+        }
 
 
-        public static string GetUserEmail(this ClaimsPrincipal principal) =>
-            GetClaimByName(principal, "email");
-        
-        public static string GetUserToken(this ClaimsPrincipal principal) =>
-            GetClaimByName(principal, "JWT");
+        public static string GetUserEmail(this ClaimsPrincipal principal)
+        {
+            return GetClaimByName(principal, "email");
+        }
+
+        public static string GetUserToken(this ClaimsPrincipal principal)
+        {
+            return GetClaimByName(principal, "JWT");
+        }
 
 
         private static string GetClaimByName(ClaimsPrincipal principal, string name)

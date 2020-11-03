@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSE.Catalogo.API.Models;
+using NSE.WebApi.Core.Controllers;
 using NSE.WebApi.Core.Identidade;
 
 namespace NSE.Catalogo.API.Controllers
 {
-    [ApiController]
     [Authorize]
-    public class CatalogoController : Controller
+    public class CatalogoController : BaseController
     {
         private readonly IProdutoRepository _produtoRepository;
 

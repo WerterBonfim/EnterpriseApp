@@ -10,12 +10,12 @@ using NSE.Clientes.API.Data;
 namespace NSE.Clientes.API.Configuration
 {
     /// <summary>
-    /// 3º Na fila do migration.
-    /// Deve ser a terceira a API a subir na ordem correta.
+    ///     3º Na fila do migration.
+    ///     Deve ser a terceira a API a subir na ordem correta.
     /// </summary>
     public class PrepararDb
     {
-        private static string _nomeApp = "Clientes.API";
+        private static readonly string _nomeApp = "Clientes.API";
 
         public static void RodarMigrationInicial(IApplicationBuilder app)
         {
@@ -38,7 +38,9 @@ namespace NSE.Clientes.API.Configuration
             context.Database.Migrate();
         }
 
-        private static void Informar(string texto) =>
+        private static void Informar(string texto)
+        {
             Console.WriteLine($"{_nomeApp}: {texto}");
+        }
     }
 }

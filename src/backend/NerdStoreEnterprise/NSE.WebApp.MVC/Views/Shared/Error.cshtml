@@ -1,17 +1,17 @@
-﻿@model NSE.WebApp.MVC.Models.ErrorViewModel
+﻿@model ErrorViewModel
 @{
-    ViewData["Title"] = @Model.Titulo;
+    ViewData["Title"] = Model.Titulo;
 }
 <div class="container">
     <div style="padding-top: 200px; text-align: center">
         @{
             if (Model == null)
             {
-            <h2>Ooops! Ocorreu um erro, mas não se preocupe. Nosso time será avisado e iremos corrigir em breve!</h2>
+                <h2>Ooops! Ocorreu um erro, mas não se preocupe. Nosso time será avisado e iremos corrigir em breve!</h2>
             }
             else
             {
-            <h2>@Html.Raw(Model.Mensagem)</h2>
+                <h2>@Html.Raw(Model.Mensagem)</h2>
             }
         }
     </div>

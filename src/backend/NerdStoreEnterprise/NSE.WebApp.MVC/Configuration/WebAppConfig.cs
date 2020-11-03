@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using NSE.WebApp.MVC.Extensions;
 
 namespace NSE.WebApp.MVC.Configuration
@@ -17,10 +16,9 @@ namespace NSE.WebApp.MVC.Configuration
 
             services.Configure<AppSettings>(configuration);
         }
-        
+
         public static void UseMvcConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             // if (env.IsDevelopment())
             // {
             //     app.UseDeveloperExceptionPage();
@@ -32,7 +30,7 @@ namespace NSE.WebApp.MVC.Configuration
             //     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             //     app.UseHsts();
             // }
-            
+
             app.UseExceptionHandler("/erro/500");
             app.UseStatusCodePagesWithRedirects("/erro/{0}");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -42,7 +40,7 @@ namespace NSE.WebApp.MVC.Configuration
             app.UseStaticFiles();
 
             app.UseRouting();
-            
+
             app.UseIdentityConfiguration();
 
             var culturasSuportadas = new[] {new CultureInfo("pt-BR")};
@@ -52,14 +50,14 @@ namespace NSE.WebApp.MVC.Configuration
                 SupportedCultures = culturasSuportadas,
                 SupportedUICultures = culturasSuportadas
             });
-            
+
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Catalogo}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Catalogo}/{action=Index}/{id?}");
             });
         }
     }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NSE.Clientes.API.Migrations
 {
-    public partial class Clientes : Migration
+    public partial class AddClientes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,9 +13,10 @@ namespace NSE.Clientes.API.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Nome = table.Column<string>(type: "varchar(200)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(254)", nullable: true),
+                    Email = table.Column<string>(type: "varchar(254)", maxLength: 254, nullable: true),
                     Cpf = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: true),
-                    Excluido = table.Column<bool>(nullable: false)
+                    Excluido = table.Column<bool>(nullable: false),
+                    EnderecoId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

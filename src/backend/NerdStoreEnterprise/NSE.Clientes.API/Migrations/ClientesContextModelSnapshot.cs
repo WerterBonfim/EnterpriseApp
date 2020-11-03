@@ -25,6 +25,9 @@ namespace NSE.Clientes.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("EnderecoId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("Excluido")
                         .HasColumnType("bit");
 
@@ -107,7 +110,8 @@ namespace NSE.Clientes.API.Migrations
                             b1.Property<string>("Endereco")
                                 .IsRequired()
                                 .HasColumnName("Email")
-                                .HasColumnType("varchar(254)");
+                                .HasColumnType("varchar(254)")
+                                .HasMaxLength(254);
 
                             b1.HasKey("ClienteId");
 

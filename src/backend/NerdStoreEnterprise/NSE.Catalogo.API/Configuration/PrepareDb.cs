@@ -11,7 +11,8 @@ namespace NSE.Catalogo.API.Configuration
 {
     public class PrepararDb
     {
-        private static string _nomeApp = "Identidade.API";
+        private static readonly string _nomeApp = "Identidade.API";
+
         public static void RodarMigrationInicial(IApplicationBuilder app)
         {
             using (var scopo = app.ApplicationServices.CreateScope())
@@ -28,12 +29,14 @@ namespace NSE.Catalogo.API.Configuration
             var temAlgoPendente = bancoNaoExiste || temMigrationsPendendente;
 
             if (!temAlgoPendente) return;
-            
+
             Informar("Rodando as migrations");
             context.Database.Migrate();
         }
-        
-        private static void Informar(string texto) =>
+
+        private static void Informar(string texto)
+        {
             Console.WriteLine($"{_nomeApp}: {texto}");
+        }
     }
 }

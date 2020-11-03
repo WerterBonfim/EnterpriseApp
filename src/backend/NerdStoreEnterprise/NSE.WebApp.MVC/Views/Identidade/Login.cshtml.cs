@@ -6,7 +6,6 @@ namespace NSE.WebApp.MVC.Views.Identidade
     {
         public void OnGet()
         {
-            
         }
     }
 }

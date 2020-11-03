@@ -22,7 +22,7 @@ namespace NSE.Identidade.API.Configuration
             });
             return services;
         }
-        
+
         public static IApplicationBuilder UseSwaggerConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwagger();
